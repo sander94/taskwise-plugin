@@ -6,11 +6,11 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       devsupportee
+ * @link       taskpress
  * @since      1.0.0
  *
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  * @author     Devsupport.ee <help@devsupport.ee>
  */
-class Devsupportee_Plugin {
+class TaskPress {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Devsupportee_Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Devsupportee_Plugin_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      TaskPress_Plugin_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -67,12 +67,12 @@ class Devsupportee_Plugin {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'DEVSUPPORTEE_PLUGIN_VERSION' ) ) {
-			$this->version = DEVSUPPORTEE_PLUGIN_VERSION;
+		if ( defined( 'TASKPRESS_PLUGIN_VERSION' ) ) {
+			$this->version = TASKPRESS_PLUGIN_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'devsupportee-plugin';
+		$this->plugin_name = 'taskpress';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class Devsupportee_Plugin {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Devsupportee_Plugin_Loader. Orchestrates the hooks of the plugin.
-	 * - Devsupportee_Plugin_i18n. Defines internationalization functionality.
-	 * - Devsupportee_Plugin_Admin. Defines all hooks for the admin area.
-	 * - Devsupportee_Plugin_Public. Defines all hooks for the public side of the site.
+	 * - TaskPress_Plugin_Loader. Orchestrates the hooks of the plugin.
+	 * - TaskPress_Plugin_i18n. Defines internationalization functionality.
+	 * - TaskPress_Plugin_Admin. Defines all hooks for the admin area.
+	 * - TaskPress_Plugin_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,33 +103,33 @@ class Devsupportee_Plugin {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-devsupportee-plugin-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-taskpress-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-devsupportee-plugin-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-taskpress-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-devsupportee-plugin-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-taskpress-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-devsupportee-plugin-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-taskpress-public.php';
 
-		$this->loader = new Devsupportee_Plugin_Loader();
+		$this->loader = new TaskPress_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Devsupportee_Plugin_i18n class in order to set the domain and to register the hook
+	 * Uses the TaskPress_Plugin_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Devsupportee_Plugin {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Devsupportee_Plugin_i18n();
+		$plugin_i18n = new TaskPress_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,11 +152,12 @@ class Devsupportee_Plugin {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Devsupportee_Plugin_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new TaskPress_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
 	}
 
 	/**
@@ -168,7 +169,7 @@ class Devsupportee_Plugin {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Devsupportee_Plugin_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new TaskPress_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -199,7 +200,7 @@ class Devsupportee_Plugin {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Devsupportee_Plugin_Loader    Orchestrates the hooks of the plugin.
+	 * @return    TaskPress_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

@@ -3,11 +3,11 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       devsupportee
+ * @link       taskpress
  * @since      1.0.0
  *
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  * @author     Devsupport.ee <help@devsupport.ee>
  */
-class Devsupportee_Plugin_Loader {
+class TaskPress_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

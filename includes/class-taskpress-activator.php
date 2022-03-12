@@ -3,11 +3,11 @@
 /**
  * Fired during plugin activation
  *
- * @link       devsupportee
+ * @link       taskpress
  * @since      1.0.0
  *
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  * @author     Devsupport.ee <help@devsupport.ee>
  */
-class Devsupportee_Plugin_Activator {
+class TaskPress_Activator {
 
 	/**
 	 * Short Description. (use period)

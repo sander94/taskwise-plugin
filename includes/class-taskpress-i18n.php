@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       devsupportee
+ * @link       taskpress
  * @since      1.0.0
  *
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Devsupportee_Plugin
- * @subpackage Devsupportee_Plugin/includes
+ * @package    TaskPress_Plugin
+ * @subpackage TaskPress_Plugin/includes
  * @author     Devsupport.ee <help@devsupport.ee>
  */
-class Devsupportee_Plugin_i18n {
+class TaskPress_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Devsupportee_Plugin_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'devsupportee-plugin',
+			'taskpress',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
