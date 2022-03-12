@@ -40,6 +40,8 @@ class TaskPress_Admin {
 	 */
 	private $version;
 
+	private $api_key;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -48,10 +50,9 @@ class TaskPress_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
+		$this->api_key     = get_option(TASKPRESS_PLUGIN_API_KEY_OPTION_KEY);
 	}
 
 	/**
@@ -60,7 +61,6 @@ class TaskPress_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -74,7 +74,6 @@ class TaskPress_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/taskpress-admin.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -83,7 +82,6 @@ class TaskPress_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -97,20 +95,151 @@ class TaskPress_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/taskpress-admin.js', array( 'jquery' ), $this->version, false );
-
 	}
 
 	public function add_menu()
     {
-        add_menu_page( "TaskWise", "TaskWise", 'manage_options', $this->plugin_name . '-list', array( $this, 'task_wise_page' ));
-        add_menu_page( "TaskWise API", "TaskWise API", 'manage_options', $this->plugin_name . '-api-key', array( $this, 'task_wise_api_key_page' ));
+        add_menu_page( "TaskWise", "TaskWise", 'manage_options', $this->plugin_name, array( $this, 'task_wise_page' ));
     }
 
 	public function task_wise_page() {
-        include( plugin_dir_path( __FILE__ ) . '/partials/taskpress-admin-display.php' );
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$this->task_wise_admin_form_post_actions();
+		}
+		
+		if (!$this->api_key) {
+			$this->task_wise_api_key_page();
+			return;
+		}
+
+		$tasks = $this->task_wise_get_tasks();
+
+		if ($tasks === null) {
+			$this->task_wise_api_key_page(true);
+			return;
+		}
+
+		include( plugin_dir_path( __FILE__ ) . '/partials/taskpress-admin-display.php' );
     }
 
-	public function task_wise_api_key_page() {
+	public function task_wise_api_key_page( $is_error = false ) {
+		$api_key = $this->api_key;
+
         include( plugin_dir_path( __FILE__ ) . '/partials/taskpress-admin-apikey-display.php' );
     }
+
+	public function task_wise_admin_form_post_actions()
+	{
+		if (!isset($_POST['taskwise_action'])) {
+			return;
+		}
+
+		switch ($_POST['taskwise_action']) {
+			case 'save_licence_key':
+				return $this->task_wise_save_api_key();
+			case 'create_task':
+				return $this->task_wise_create_task();
+		}
+	}
+
+	public function task_wise_create_task()
+	{
+		if (
+			!empty($_POST['title']) &&
+			!empty($_POST['problem'])
+		) {
+			$title    = $_POST['title'];
+			$due_date = $_POST['due_date'];
+			$problem  = $_POST['problem'];
+			$url      = TASKWISE_SERVER_URL . '?api_token=' . $this->api_key;
+			$client   = new WP_Http();
+
+			try {
+				$result  = $client->post(
+					$url,
+					array(
+						'sslverify' => false,
+						'headers' => array(
+							'Content-Type'  => 'application/json',
+							'Accept'        => 'application/json'
+						),
+						'body' => json_encode(array(
+								'title'       => $title,
+								'due_date'    => $due_date,
+								'description' => $problem
+							)
+						)
+					)
+				);
+	
+				if ($result instanceof WP_Error) {
+					return false;
+				}
+
+				if ($result['response']['code'] == 200) {
+					return true;
+				}
+
+				return false;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	public function task_wise_get_tasks()
+	{
+		$url    = TASKWISE_SERVER_URL . '?api_token=' . $this->api_key;
+		$client = new WP_Http();
+		$error  = null;
+		$tasks  = array();
+
+		try {	
+			$result  = $client->get(
+				$url,
+				array(
+					'sslverify' => false,
+					'headers' => array(
+						'Content-Type'  => 'application/json',
+						'Accept'        => 'application/json'
+					)
+				)
+			);
+
+			if ($result instanceof WP_Error) {
+				return array();
+			}
+
+			if ($result['response']['code'] == 200) {
+				$tasks = json_decode($result['body'])->data;
+			} else {
+				if ($result['response']['code'] == 401) {
+					return null;
+				}
+
+				return array();
+			}
+		} catch (Exception $e) {
+			return array();
+		}
+
+		return $tasks;
+	}
+
+	public function task_wise_save_api_key()
+	{
+		// Needs refactor about the return values
+		if ( !empty( $_POST['licence_key'] ) ) {
+			if( get_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY ) ){
+				update_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY, $_POST['licence_key'] );
+		   	} else {
+				add_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY, $_POST['licence_key'] );
+		   	}
+			return true;
+		}
+
+		return false;
+	}
 }

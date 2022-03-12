@@ -35,7 +35,17 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'TASKPRESS_PLUGIN_VERSION', '1.0.0' );
+define( 'TASKPRESS_PLUGIN_VERSION', 'v.0.1 Alpha' );
+
+/**
+ * The option key to store the API key for the customer
+ */
+define( 'TASKPRESS_PLUGIN_API_KEY_OPTION_KEY', 'TaskPress_API_Key' );
+
+/**
+ * The option key to store the API key for the customer
+ */
+define( 'TASKWISE_SERVER_URL', 'https://portal.taskwise.io/api/tasks' );
 
 /**
  * The code that runs during plugin activation.
