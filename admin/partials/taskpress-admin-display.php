@@ -43,25 +43,34 @@
 				<p>Share a task with your web developer instantly</p>
 			</div>
 			<div class="menu-card" onClick="return showActiveTasks();" id="active-tasks-button" style="margin-left: 10px;">
-				<h3>View all tasks <?php if (count($tasks)) echo '(' . count($tasks) . ')'; ?></h3>
+				<h3>View all tasks <?php if ( count( $tasks ) ) echo '(' . count( $tasks ) . ')'; ?></h3>
 				<p>View the tasks you have shared with your developer</p>
 			</div>
 		</div>
 		<div class="create-task-container" id="create-task">
+			<?php
+				if ( isset( $post_result ) && ( $post_result === true ) ) {
+					$_POST['title'] = $_POST['due_date'] = $_POST['problem'] = '';
+				}
+			?>
 			<form action="" method="POST">
 				<input type="hidden" name="taskwise_action" value="create_task" />
 				<div style="display: flex; margin-bottom: 30px;">
 					<div class="title">
-						<input type="text" name="title" placeholder="Title" required>
+						<input type="text" name="title" placeholder="Title" required value="<?php echo isset( $_POST['title'] ) ? $_POST['title']: ''; ?>">
 					</div>
 					<div class="due-date">
-						<input type="text" name="due_date" placeholder="Due date">
+						<input type="text" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
 					</div>
 				</div>
 
 				<div class="problem">
-					<textarea name="problem" placeholder="Write about what you need help with..." required></textarea>
+					<textarea name="problem" placeholder="Write about what you need help with..." required><?php echo isset( $_POST['problem'] ) ? $_POST['problem']: ''; ?></textarea>
 				</div>
+
+				<?php if ( isset( $post_result ) && ( $post_result === false ) ) { ?>
+					<div class="wrong-key">Error in task creation</div>
+				<?php } ?>
 
 			<input type="submit" value="Send!" name="submit" class="submit">
 			</form>

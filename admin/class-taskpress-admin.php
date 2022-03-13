@@ -18,7 +18,7 @@
  *
  * @package    TaskPress_Plugin
  * @subpackage TaskPress_Plugin/admin
- * @author     Devsupport.ee <help@devsupport.ee>
+ * @author     Sander Jürgens <sanderjyrgens@gmail.com>
  */
 class TaskPress_Admin {
 
@@ -104,7 +104,7 @@ class TaskPress_Admin {
 
 	public function task_wise_page() {
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			$this->task_wise_admin_form_post_actions();
+			$post_result = $this->task_wise_admin_form_post_actions();
 		}
 		
 		if (!$this->api_key) {
@@ -176,7 +176,7 @@ class TaskPress_Admin {
 					return false;
 				}
 
-				if ($result['response']['code'] == 200) {
+				if ($result['response']['code'] == 201) {
 					return true;
 				}
 
