@@ -88,7 +88,7 @@
 						<i class="fa fa-chevron-down task-arrow"></i>
 					</div>
 					<div class="task-info" id="task-<?=$task->id?>">
-						<?=$task->title?>
+						<?=$task->description?>
 					</div>
 				</div>
 				<?php } ?>
@@ -105,7 +105,7 @@
 						<i class="fa fa-chevron-down task-arrow"></i>
 					</div>
 					<div class="task-info" id="done-<?=$task->id?>">
-						<?=$task->title?>
+						<?=$task->description?>
 					</div>
 				</div>
 				<?php } ?>
