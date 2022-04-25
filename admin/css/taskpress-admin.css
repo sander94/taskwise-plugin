@@ -3,9 +3,7 @@
  * included in this file.
  */
 
- * {
-	font-family: 'Poppins';
-}
+
 body {
 	background: #F1F1F1;
 }
@@ -169,15 +167,11 @@ body {
 	margin-bottom: 40px;
 }
 .circle-icon {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    text-align: center;
-    line-height: 15px;
-    vertical-align: middle;
-    padding: 5px;
-    font-size: 10px;
     margin-right: 8px;
+    display: inline-block;
 }
 .bg-green {
 	background-color: #bff9c9;
