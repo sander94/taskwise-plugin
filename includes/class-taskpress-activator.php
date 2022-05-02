@@ -30,7 +30,7 @@ class TaskPress_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		delete_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY );
 	}
 
 }

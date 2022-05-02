@@ -30,7 +30,6 @@ class TaskPress_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		delete_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY );
 	}
-
 }
