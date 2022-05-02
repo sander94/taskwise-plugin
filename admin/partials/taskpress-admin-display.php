@@ -60,7 +60,7 @@
 						<input type="text" name="title" placeholder="Title" required value="<?php echo isset( $_POST['title'] ) ? $_POST['title']: ''; ?>">
 					</div>
 					<div class="due-date">
-						<input type="text" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
+						<input type="date" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
 					</div>
 				</div>
 
