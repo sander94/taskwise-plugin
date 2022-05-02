@@ -49,9 +49,11 @@
 		</div>
 		<div class="create-task-container" id="create-task">
 			<?php
-				if ( isset( $post_result ) && ( $post_result === true ) ) {
-					$_POST['title'] = $_POST['due_date'] = $_POST['problem'] = '';
-				}
+			if ( isset( $post_result ) && ( $post_result === true ) ) {
+				$_POST['title'] = '';
+				$_POST['due_date'] = '';
+				$_POST['problem'] = '';
+			}
 			?>
 			<form action="" method="POST">
 				<input type="hidden" name="taskwise_action" value="create_task" />
@@ -67,6 +69,10 @@
 				<div class="problem">
 					<textarea name="problem" placeholder="Write about what you need help with..." required><?php echo isset( $_POST['problem'] ) ? $_POST['problem']: ''; ?></textarea>
 				</div>
+
+				<?php if ( isset( $post_result ) && ( $post_result === true ) ) { ?>
+					<div class="task-success">Task is created successfully.</div>
+				<?php } ?>
 
 				<?php if ( isset( $post_result ) && ( $post_result === false ) ) { ?>
 					<div class="wrong-key">Error in task creation</div>
