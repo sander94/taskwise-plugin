@@ -163,7 +163,8 @@ class TaskPress_Admin {
 							'Content-Type'  => 'application/json',
 							'Accept'        => 'application/json'
 						),
-						'body' => json_encode(array(
+						'body' => json_encode(
+							array(
 								'title'       => $title,
 								'due_date'    => $due_date,
 								'description' => $problem
@@ -171,7 +172,7 @@ class TaskPress_Admin {
 						)
 					)
 				);
-	
+
 				if ($result instanceof WP_Error) {
 					return false;
 				}

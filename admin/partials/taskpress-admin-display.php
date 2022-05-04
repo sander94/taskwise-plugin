@@ -59,7 +59,7 @@
 				<input type="hidden" name="taskwise_action" value="create_task" />
 				<div style="display: flex; margin-bottom: 30px;">
 					<div class="title">
-						<input type="text" name="title" placeholder="Title" required value="<?php echo isset( $_POST['title'] ) ? $_POST['title']: ''; ?>">
+						<input type="text" name="title" placeholder="Title" required value="<?php echo isset( $_POST['title'] ) ? stripslashes($_POST['title']): ''; ?>">
 					</div>
 					<div class="due-date">
 						<input type="date" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
@@ -67,7 +67,7 @@
 				</div>
 
 				<div class="problem">
-					<textarea name="problem" placeholder="Write about what you need help with..." required><?php echo isset( $_POST['problem'] ) ? $_POST['problem']: ''; ?></textarea>
+					<textarea name="problem" placeholder="Write about what you need help with..." required><?php echo isset( $_POST['problem'] ) ? stripslashes($_POST['problem']): ''; ?></textarea>
 				</div>
 
 				<?php if ( isset( $post_result ) && ( $post_result === true ) ) { ?>
@@ -90,11 +90,11 @@
 				<div class="task-element">
 					<div class="task-heading" onclick="taskSlideToggle('#task-<?=$task->id?>')">
 						<i class="fa fa-check circle-icon bg-gray"></i> 
-						<?=$task->title?>
+						<?=stripslashes($task->title)?>
 						<i class="fa fa-chevron-down task-arrow"></i>
 					</div>
 					<div class="task-info" id="task-<?=$task->id?>">
-						<?=$task->description?>
+						<?=stripslashes($task->description)?>
 					</div>
 				</div>
 				<?php } ?>
@@ -107,11 +107,11 @@
 				<div class="task-element">
 					<div class="task-heading" onclick="taskSlideToggle('#done-<?=$task->id?>')">
 						<i class="fa fa-check circle-icon bg-green"></i> 
-						<?=$task->title?>
+						<?=stripslashes($task->title)?>
 						<i class="fa fa-chevron-down task-arrow"></i>
 					</div>
 					<div class="task-info" id="done-<?=$task->id?>">
-						<?=$task->description?>
+						<?=stripslashes($task->description)?>
 					</div>
 				</div>
 				<?php } ?>
