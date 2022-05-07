@@ -148,6 +148,7 @@ class TaskPress_Admin {
 			!empty($_POST['title']) &&
 			!empty($_POST['problem'])
 		) {
+			$_POST    = array_map( 'stripslashes_deep', $_POST );
 			$title    = $_POST['title'];
 			$due_date = $_POST['due_date'];
 			$problem  = $_POST['problem'];
