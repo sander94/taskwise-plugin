@@ -43,7 +43,7 @@
 				<p>Share a task with your web developer instantly</p>
 			</div>
 			<div class="menu-card" onClick="return showActiveTasks();" id="active-tasks-button" style="margin-left: 10px;">
-				<h3>View all tasks <?php if ( count( $tasks ) ) echo '(' . count( $tasks ) . ')'; ?></h3>
+				<h3>View all tasks <?php if ( !empty($counts['ongoing'] )) echo '(' . $counts['ongoing'] .  ')'; ?></h3>
 				<p>View the tasks you have shared with your developer</p>
 			</div>
 		</div>

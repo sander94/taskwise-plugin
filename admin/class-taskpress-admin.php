@@ -119,6 +119,8 @@ class TaskPress_Admin {
 			return;
 		}
 
+		$counts = $this->task_wise_get_counts($tasks);
+
 		include( plugin_dir_path( __FILE__ ) . '/partials/taskpress-admin-display.php' );
     }
 
@@ -228,6 +230,24 @@ class TaskPress_Admin {
 		}
 
 		return $tasks;
+	}
+
+	public function task_wise_get_counts($tasks)
+	{
+		$counts = array(
+			'ongoing' => 0,
+			'done'    => 0
+		);
+
+		foreach ($tasks as $task) {
+			if ($task->task_status_id != 3) {
+				$counts['ongoing']++;
+			} else {
+				$counts['done']++;
+			}
+		}
+
+		return $counts;
 	}
 
 	public function task_wise_save_api_key()
