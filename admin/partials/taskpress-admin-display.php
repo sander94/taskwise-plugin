@@ -62,7 +62,7 @@
 						<input type="text" name="title" placeholder="Title" required value="<?php echo isset( $_POST['title'] ) ? stripslashes($_POST['title']): ''; ?>">
 					</div>
 					<div class="due-date">
-						<input type="date" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
+						<input type="text" class="date_picker" name="due_date" placeholder="Due date" value="<?php echo isset( $_POST['due_date'] ) ? $_POST['due_date']: ''; ?>">
 					</div>
 				</div>
 
@@ -119,3 +119,11 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.date_picker').datepicker({
+            dateFormat : 'mm/dd/yy'
+        });
+    });
+</script>

@@ -74,6 +74,13 @@ class TaskPress_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/taskpress-admin.css', array(), $this->version, 'all' );
+		$wp_scripts = wp_scripts();
+
+		wp_enqueue_style('plugin_name-admin-ui-css',
+			'http://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css',
+			false,
+			TASKPRESS_PLUGIN_VERSION,
+			false);
 	}
 
 	/**
@@ -95,6 +102,9 @@ class TaskPress_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/taskpress-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script('jquery');
+		wp_enqueue_script('jquery-ui-core');
+		wp_enqueue_script('jquery-ui-datepicker');
 	}
 
 	public function add_menu()
@@ -156,7 +166,7 @@ class TaskPress_Admin {
 			$problem  = $_POST['problem'];
 			$url      = TASKWISE_SERVER_URL . '?api_token=' . $this->api_key;
 			$client   = new WP_Http();
-
+			
 			try {
 				$result  = $client->post(
 					$url,
@@ -183,7 +193,7 @@ class TaskPress_Admin {
 				if ($result['response']['code'] == 201) {
 					return true;
 				}
-
+				
 				return false;
 			} catch (Exception $e) {
 				return false;

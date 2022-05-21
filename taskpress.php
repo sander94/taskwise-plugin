@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'TASKPRESS_PLUGIN_VERSION', 'v.0.1 Alpha' );
+define( 'TASKPRESS_PLUGIN_VERSION', 'v.0.2 Alpha' );
 
 /**
  * The option key to store the API key for the customer
