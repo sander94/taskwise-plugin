@@ -193,7 +193,7 @@ class TaskPress_Admin {
 				if ($result['response']['code'] == 201) {
 					return true;
 				}
-				
+
 				return false;
 			} catch (Exception $e) {
 				return false;
@@ -269,6 +269,9 @@ class TaskPress_Admin {
 		   	} else {
 				add_option( TASKPRESS_PLUGIN_API_KEY_OPTION_KEY, $_POST['licence_key'] );
 		   	}
+
+			$this->api_key = get_option(TASKPRESS_PLUGIN_API_KEY_OPTION_KEY);
+			
 			return true;
 		}
 
